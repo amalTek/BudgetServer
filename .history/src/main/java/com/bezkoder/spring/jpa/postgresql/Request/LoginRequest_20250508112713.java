@@ -1,31 +1,29 @@
 package com.bezkoder.spring.jpa.postgresql.Request;
-
 public class LoginRequest {
 
-    private String email;
-    private String password;
 
     public LoginRequest() {
+
     }
 
-    public LoginRequest(String email, String password) {
-        this.email = email;
+    public LoginRequest(String userId, String password) {
+        super();
+        this.userId = userId;
         this.password = password;
     }
-
-    public String getEmail() {
-        return email;
+    public String getUserId() {
+        return userId;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
+    private String userId;
+    private String password;
+
 }
