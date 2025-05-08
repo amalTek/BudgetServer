@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("/api")
-public class UsersController {
+@RequestMapping("/api")public class UsersController {
 
     @Autowired
     UserService userService;
@@ -20,12 +19,9 @@ public class UsersController {
     }
 
     @PostMapping("/loginUser")
-    public String loginUser(@RequestBody LoginRequest loginRequest) {
-        String token = userService.loginUser(loginRequest);
-        if (token == null) {
-            throw new RuntimeException("Invalid credentials");
-        }
-        return token;
+    public Boolean loginUser(@RequestBody LoginRequest loginRequest) {
+        return userService.loginUser(loginRequest);
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.bezkoder.spring.jpa.postgresql.Service;
 
+
 import java.util.Optional;
 import java.util.Date;
 
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+
 
 @Service
 public class UserService {
@@ -28,8 +31,8 @@ public class UserService {
 
     public String loginUser(LoginRequest loginRequest) {
         Optional<User> userOpt = usersRepo.findAll().stream()
-                .filter(u -> u.getEmail().equals(loginRequest.getUserId()))
-                .findFirst();
+            .filter(u -> u.getEmail().equals(loginRequest.getUserId()))
+            .findFirst();
         if (userOpt.isEmpty()) {
             return null;
         }
