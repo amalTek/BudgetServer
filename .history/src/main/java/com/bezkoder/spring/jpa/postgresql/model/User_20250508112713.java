@@ -1,12 +1,14 @@
 package com.bezkoder.spring.jpa.postgresql.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users") // matches the table name
+@Table(name = "users")  // matches the table name
 public class User {
 
     @Id
@@ -18,16 +20,13 @@ public class User {
 
     private String name;
     private String password;
-    private String role;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(String email, String name, String password, String role) {
+    public User(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.role = role;
     }
 
     // Getters and setters
@@ -61,13 +60,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }
