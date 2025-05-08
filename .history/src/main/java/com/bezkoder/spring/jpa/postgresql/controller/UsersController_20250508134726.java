@@ -21,13 +21,11 @@ public class UsersController {
     @Autowired
     UserService userService;
 
-    @Operation(summary = "Add a new user", description = "Creates a new user with the provided details.")
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
-    @Operation(summary = "Login user", description = "Authenticates a user and returns a JWT token.")
     @PostMapping("/loginUser")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         String token = userService.loginUser(loginRequest);
@@ -37,20 +35,17 @@ public class UsersController {
         return ResponseEntity.ok(token);
     }
 
-    @Operation(summary = "Get all users", description = "Retrieves a list of all users.")
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @Operation(summary = "Get user by ID", description = "Retrieves a user by their ID.")
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Update user", description = "Updates a user's details by their ID.")
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         User updatedUser = userService.updateUser(id, userDetails);
@@ -60,7 +55,6 @@ public class UsersController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @Operation(summary = "Delete user", description = "Deletes a user by their ID.")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         boolean deleted = userService.deleteUser(id);
