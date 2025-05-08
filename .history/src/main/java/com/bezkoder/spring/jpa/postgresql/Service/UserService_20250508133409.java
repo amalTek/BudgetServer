@@ -21,11 +21,11 @@ public class UserService {
 
     private static final String SECRET_KEY = "mySecretKey";
     private static final long EXPIRATION_TIME = 86400000; // 1 day in ms
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User addUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         return usersRepo.save(user);
+
     }
 
     public String loginUser(LoginRequest loginRequest) {
@@ -72,7 +72,7 @@ public class UserService {
             user.setEmail(userDetails.getEmail());
         }
         if (userDetails.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+            user.setPassword(userDetails.getPassword());
         }
         if (userDetails.getRole() != null) {
             user.setRole(userDetails.getRole());
