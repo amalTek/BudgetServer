@@ -18,6 +18,8 @@ public class User {
 
     private String name;
     private String password;
+    private String lastName;
+
     private String role;
 
     public User() {

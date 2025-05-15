@@ -29,7 +29,7 @@ public class ExpenseController {
     }
 
     // Create a new expense
-    @PostMapping
+    @PostMapping("/createExpense")
     public Expense createExpense(@RequestBody Expense expense) {
         return expenseRepository.save(expense);
     }

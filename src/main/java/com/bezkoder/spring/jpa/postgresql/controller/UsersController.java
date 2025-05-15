@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin()
@@ -24,12 +27,12 @@ public class UsersController {
     }
 
     @PostMapping("/loginUser")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody LoginRequest loginRequest) {
         String token = userService.loginUser(loginRequest);
         if (token == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(Collections.singletonMap("token", token));
     }
 
     @GetMapping("/users")
