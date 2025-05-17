@@ -44,6 +44,8 @@ public class ExpenseController {
         expense.setCategory(expenseDetails.getCategory());
         expense.setDescription(expenseDetails.getDescription());
         expense.setAmount(expenseDetails.getAmount());
+        expense.setStatus(expenseDetails.getStatus());
+
 
         return expenseRepository.save(expense);
     }
