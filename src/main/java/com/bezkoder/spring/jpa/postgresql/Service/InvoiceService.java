@@ -50,6 +50,10 @@ public class InvoiceService {
     public Invoice updateInvoice(Long id, Invoice updatedInvoice) {
         return invoiceRepository.findById(id).map(invoice -> {
             invoice.setClientEmail(updatedInvoice.getClientEmail());
+            invoice.setCorporate(updatedInvoice.getCorporate());
+            invoice.setAddress(updatedInvoice.getAddress());
+      //      invoice.setInvoiceDate(updatedInvoice.setInvoiceDate(););
+
             invoice.setStatus(updatedInvoice.getStatus());
             invoice.setTotalAmount(updatedInvoice.getTotalAmount());
             invoice.setDueDate(updatedInvoice.getDueDate());

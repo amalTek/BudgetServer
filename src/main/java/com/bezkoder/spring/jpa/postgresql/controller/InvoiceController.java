@@ -51,7 +51,7 @@ public class InvoiceController {
         return invoiceService.getTotalAmountByClient(email);
     }
 
-    @PostMapping
+    @PostMapping("/createNewInvoice")
     public Invoice createInvoice(@RequestBody Invoice invoice) {
         return invoiceService.createInvoice(invoice);
     }

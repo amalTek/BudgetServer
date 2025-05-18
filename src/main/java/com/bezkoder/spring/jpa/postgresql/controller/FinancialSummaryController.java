@@ -38,4 +38,9 @@ public class FinancialSummaryController {
     public FinancialSummary updateFinancialSummary(@PathVariable Long id, @RequestParam Double totalInvoicing, @RequestParam Double totalExpenses) {
         return financialSummaryService.updateFinancialSummary(id, totalInvoicing, totalExpenses);
     }
-}
+    @PostMapping("/update-current")
+    public ResponseEntity<FinancialSummary> updateCurrentMonthExpenses(
+            @RequestParam("totalExpenses") Double totalExpenses) { // Explicit parameter name
+        return ResponseEntity.ok(financialSummaryService.updateCurrentMonthExpenses(totalExpenses));
+
+}}

@@ -47,4 +47,29 @@ public class FinancialSummaryService {
         }
         return null; // Or throw an exception if not found
     }
+
+    public FinancialSummary updateCurrentMonthExpenses(Double newExpenses) {
+        // Get current month's summary or create new one if doesn't exist
+        FinancialSummary summary = financialSummaryRepository.findOrCreateCurrentMonthSummary();
+
+        // Get current expenses (default to 0 if null)
+        Double currentExpenses = summary.getTotalExpenses() != null ?
+                summary.getTotalExpenses() : 0.0;
+
+        // ADD new expenses to existing total (not replace)
+        Double updatedExpenses = currentExpenses + newExpenses;
+        summary.setTotalExpenses(updatedExpenses);
+
+        // Get current invoicing (default to 0 if null)
+        Double currentInvoicing = summary.getTotalInvoicing() != null ?
+                summary.getTotalInvoicing() : 0.0;
+
+        // Recalculate balance (invoicing minus updated expenses)
+        summary.setCurrentBalance(currentInvoicing - updatedExpenses);
+
+        return financialSummaryRepository.save(summary);
+    }
+    public FinancialSummary getCurrentMonthSummary() {
+        return financialSummaryRepository.findOrCreateCurrentMonthSummary();
+    }
 }
