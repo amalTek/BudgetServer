@@ -20,13 +20,8 @@ public interface FinancialSummaryRepository extends JpaRepository<FinancialSumma
     Optional<FinancialSummary> findCurrentMonthSummary();
 
     // Find or create current month summary
-    default FinancialSummary findOrCreateCurrentMonthSummary() {
-        return findCurrentMonthSummary().orElseGet(() -> {
-            FinancialSummary newSummary = new FinancialSummary();
-            newSummary.setCreatedAt(LocalDateTime.now());
-            return save(newSummary);
-        });
-    }
+
+
 
 
 }
