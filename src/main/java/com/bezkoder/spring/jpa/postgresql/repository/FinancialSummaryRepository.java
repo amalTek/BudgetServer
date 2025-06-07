@@ -19,6 +19,7 @@ public interface FinancialSummaryRepository extends JpaRepository<FinancialSumma
     @Query("SELECT fs FROM FinancialSummary fs WHERE YEAR(fs.createdAt) = YEAR(CURRENT_DATE) AND MONTH(fs.createdAt) = MONTH(CURRENT_DATE)")
     Optional<FinancialSummary> findCurrentMonthSummary();
 
+
     // Find or create current month summary
 
 
