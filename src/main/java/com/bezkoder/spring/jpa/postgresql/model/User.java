@@ -94,4 +94,5 @@ public class User {
     public void setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
     }
+
 }
