@@ -2,7 +2,6 @@ package com.bezkoder.spring.jpa.postgresql.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -20,16 +19,23 @@ public class User {
     private String password;
     private String lastName;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER; // Default role
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AccountStatus accountStatus = AccountStatus.PENDING;
 
     public User() {
     }
 
-    public User(String email, String name, String password, String role) {
+    public User(String email, String name, String password, Role role) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.role = role;
+        this.accountStatus = AccountStatus.PENDING;
     }
 
     // Getters and setters
@@ -65,11 +71,27 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
     }
 }
