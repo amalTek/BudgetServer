@@ -5,6 +5,8 @@ import com.bezkoder.spring.jpa.postgresql.repository.FinancialSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -13,11 +15,6 @@ public class FinancialSummaryService {
     @Autowired
     private FinancialSummaryRepository financialSummaryRepository;
 
-    // Method to save a new financial summary
-    public FinancialSummary addFinancialSummary(Double totalInvoicing, Double totalExpenses) {
-        FinancialSummary financialSummary = new FinancialSummary(totalInvoicing, totalExpenses);
-        return financialSummaryRepository.save(financialSummary);
-    }
 
     public List<FinancialSummary> getAllFinancialSummaries() {
         return financialSummaryRepository.findAll();
@@ -35,24 +32,33 @@ public class FinancialSummaryService {
         }
         return getAllFinancialSummaries();
     }
+    public void updateFinancialSummary(String monthYear, long amount) {
+        YearMonth targetMonth = YearMonth.parse(monthYear);
 
-    // Method to update a financial summary (e.g., update invoicing or expenses)
-    public FinancialSummary updateFinancialSummary(Long id, Double totalInvoicing, Double totalExpenses) {
-        FinancialSummary existingSummary = financialSummaryRepository.findById(id).orElse(null);
-        if (existingSummary != null) {
-            existingSummary.setTotalInvoicing(totalInvoicing);
-            existingSummary.setTotalExpenses(totalExpenses);
-            existingSummary.setCurrentBalance(totalInvoicing - totalExpenses);
-            return financialSummaryRepository.save(existingSummary);
+        LocalDateTime startOfMonth = targetMonth.atDay(1).atStartOfDay();
+        LocalDateTime endOfMonth = targetMonth.atEndOfMonth().atTime(23, 59, 59);
+
+        List<FinancialSummary> summaries = financialSummaryRepository.findByCreatedAtBetween(startOfMonth, endOfMonth);
+
+        if (!summaries.isEmpty()) {
+            FinancialSummary existing = summaries.get(0);
+            double newExpenses = existing.getTotalExpenses() + amount;
+            existing.setTotalExpenses(newExpenses);
+            existing.setCurrentBalance(existing.getCurrentBalance() - amount);
+
+            financialSummaryRepository.save(existing);
+        } else {
+            FinancialSummary newSummary = new FinancialSummary();
+            newSummary.setCreatedAt(startOfMonth);
+            newSummary.setTotalExpenses((double) amount);
+            newSummary.setTotalInvoicing(0.0); // Set properly if known
+            newSummary.setCurrentBalance(0.0 - amount); // Or any logic you want
+
+            financialSummaryRepository.save(newSummary);
         }
-        return null; // Or throw an exception if not found
     }
 
-    public FinancialSummary updateCurrentMonthExpenses(Double newExpenses) {
-        // Get current month's summary or create new one if doesn't exist
 
 
-        return null;
-    }
 
 }

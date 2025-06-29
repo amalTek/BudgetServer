@@ -1,5 +1,6 @@
 package com.bezkoder.spring.jpa.postgresql.controller;
 
+import com.bezkoder.spring.jpa.postgresql.DTO.MonthlyAmountRequest;
 import com.bezkoder.spring.jpa.postgresql.Service.FinancialSummaryService;
 import com.bezkoder.spring.jpa.postgresql.model.FinancialSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,6 @@ public class FinancialSummaryController {
     private FinancialSummaryService financialSummaryService;
 
     // Create a new financial summary
-    @PostMapping
-    public FinancialSummary createFinancialSummary(@RequestParam Double totalInvoicing, @RequestParam Double totalExpenses) {
-        return financialSummaryService.addFinancialSummary(totalInvoicing, totalExpenses);
-    }
 
     // Get all financial summaries
     @GetMapping("/loadFinancialSummary")
@@ -34,13 +31,13 @@ public class FinancialSummaryController {
     }
 
     // Update a financial summary
-    @PutMapping("/{id}")
-    public FinancialSummary updateFinancialSummary(@PathVariable Long id, @RequestParam Double totalInvoicing, @RequestParam Double totalExpenses) {
-        return financialSummaryService.updateFinancialSummary(id, totalInvoicing, totalExpenses);
-    }
-    @PostMapping("/update-current")
-    public ResponseEntity<FinancialSummary> updateCurrentMonthExpenses(
-            @RequestParam("totalExpenses") Double totalExpenses) { // Explicit parameter name
-        return ResponseEntity.ok(financialSummaryService.updateCurrentMonthExpenses(totalExpenses));
 
-}}
+    @PostMapping("/updateFinancialSummary")
+    public ResponseEntity<Void> updateFinancialSummary(@RequestBody List<MonthlyAmountRequest> requests) {
+        for (MonthlyAmountRequest request : requests) {
+            financialSummaryService.updateFinancialSummary(request.getMonth(), request.getTotalAmount());
+        }
+        return ResponseEntity.ok().build();
+    }
+
+}

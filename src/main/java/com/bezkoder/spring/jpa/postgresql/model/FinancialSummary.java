@@ -23,53 +23,44 @@ public class FinancialSummary {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now(); // Timestamp field
 
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getTotalInvoicing() {
-        return totalInvoicing;
-    }
-
-    public void setTotalInvoicing(Double totalInvoicing) {
-        this.totalInvoicing = totalInvoicing;
-    }
-
-    public Double getTotalExpenses() {
-        return totalExpenses;
     }
 
     public void setTotalExpenses(Double totalExpenses) {
         this.totalExpenses = totalExpenses;
     }
 
-    public Double getCurrentBalance() {
-        return currentBalance;
+    public void setTotalInvoicing(Double totalInvoicing) {
+        this.totalInvoicing = totalInvoicing;
     }
 
     public void setCurrentBalance(Double currentBalance) {
         this.currentBalance = currentBalance;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    // Constructor for creating a new record
-    public FinancialSummary(Double totalInvoicing, Double totalExpenses) {
-        this.totalInvoicing = totalInvoicing;
-        this.totalExpenses = totalExpenses;
-        this.currentBalance = totalInvoicing - totalExpenses;
+    public Double getTotalInvoicing() {
+        return totalInvoicing;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Double getTotalExpenses() {
+        return totalExpenses;
+    }
+
+    public Double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     // Default constructor (JPA requires it)
